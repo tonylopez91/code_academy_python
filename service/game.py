@@ -7,6 +7,13 @@ from model.characters.villains import monster
 from model.weapons import Physical, Magical 
 from model.characters import Warrior, Mage, Dragon, Ogre, Hero, Monster
 
+
+# This class should be split into more specific bits, 
+# the mission could have been turned into a model 
+# and most of the promt logic could be move
+# to a specific service
+
+
 class Game:
 
   __hero: Hero
