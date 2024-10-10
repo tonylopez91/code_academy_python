@@ -106,7 +106,6 @@ magical_hand_weapons = (
     "Spellblade"
 )
 
-
 hand_actions = (
     "Swinging",
     "Thrusting",
@@ -139,22 +138,22 @@ special_effect_damage_range = (5, 30)
 weapons_damage_range = (70, 100)
 
 characters_life_range = {
-  'Warrior': (150, 200),
-  'Mage': (100, 150),
-  'Dragon': (250, 400),
-  'Ogre': (150, 200),
+    'Warrior': (150, 200),
+    'Mage': (100, 150),
+    'Dragon': (250, 400),
+    'Ogre': (150, 200),
 }
 
 characters_attack_range = {
-  'Warrior': (15, 20),
-  'Mage': (10, 15),
-  'Dragon': (55, 70),
-  'Ogre': (50, 65),
+    'Warrior': (15, 20),
+    'Mage': (10, 15),
+    'Dragon': (55, 70),
+    'Ogre': (50, 65),
 }
 
 charaters_weapons = {
-  'Warrior': hand_weapons,
-  'Mage': magical_hand_weapons,
+    'Warrior': hand_weapons,
+    'Mage': magical_hand_weapons,
 }
 
 welcome_msg = """ 
@@ -171,8 +170,8 @@ Let the adventure begin!
 """
 
 hero_actions = {
-  'Attack': 'attack',
-  'Escape': 'escape'
+    'Attack': 'attack',
+    'Escape': 'escape'
 }
 
 missions = missions = (
