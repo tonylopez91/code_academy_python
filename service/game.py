@@ -12,7 +12,7 @@ from model.weapons import Physical, Magical
 
 # This class should be split into more specific bits, 
 # the mission could have been turned into a model 
-# and most of the promt logic could be move
+# and most of the prompt logic could be moved
 # to a specific service
 
 
@@ -48,13 +48,13 @@ class Game:
         }
 
         for i in range(configs.villains_amount):
-            type = choice(list(monsters.keys()))
+            monster_type = choice(list(monsters.keys()))
             name = generate_name(style='greek', library=True)
-            life = choice(configs.characters_life_range[type])
-            attack = choice(configs.characters_attack_range[type])
+            life = choice(configs.characters_life_range[monster_type])
+            attack = choice(configs.characters_attack_range[monster_type])
             weakness = choice(configs.magic_element_list + configs.hand_weapons)
             weakness_damage = randint(10, 20)
-            self.__monster_list.append(monsters[type](name, life, attack, weakness, weakness_damage))
+            self.__monster_list.append(monsters[monster_type](name, life, attack, weakness, weakness_damage))
 
     def generate_hero_name(self, style):
         names = []
@@ -76,7 +76,6 @@ class Game:
         give_name = questionary.select('Do you want to give your hero a name:', choices=give_name_options).ask()
         select_name_type = questionary.select('Select the style for the name of your hero:', styles)
         ask_name = questionary.text('Type your Hero name')
-        hero_name = ''
 
         if give_name == give_name_options[0]:
             hero_name = ask_name.ask()
@@ -90,13 +89,13 @@ class Game:
         self.generate_hero(hero_class, hero_name, weapon_type)
 
     def prompt_set_missions(self):
-        while self.__are_missions_left != False:
+        while self.__are_missions_left:
             missions = [mission['mission'] for mission in configs.missions if mission['completed'] == False]
 
             mission_selected = questionary.select("Select a mission to start:", choices=missions + ['Quit']).ask()
 
             if mission_selected == 'Quit':
-                self.dramatical_print('Thanks for playing :), See you soon!!')
+                self.dramatic_print('Thanks for playing :), See you soon!!')
                 self.__are_missions_left = False
                 break
 
@@ -104,7 +103,7 @@ class Game:
             mission_monster = [monster for monster in self.get_monsters() if
                                monster.get_type() == mission['monster']].pop()
 
-            self.dramatical_print(mission['narration'])
+            self.dramatic_print(mission['narration'])
 
             mission_actions = [actions['action'] for actions in mission['actions']]
             (is_hero_alive, is_monster_alive) = self.are_characters_alive(mission_monster)
@@ -118,14 +117,14 @@ class Game:
 
                 action = [m for m in mission['actions'] if m['action'] == action_selected].pop()
 
-                if (action['purpose'] == configs.hero_actions['Escape']):
+                if action['purpose'] == configs.hero_actions['Escape']:
                     escape = [purpose for purpose in action['actions'] if
                               purpose['result'] == action['purpose'] and purpose['damaged'] == has_been_battle].pop()
-                    self.dramatical_print(escape['narration'])
+                    self.dramatic_print(escape['narration'])
                     break
 
                 has_been_battle = True
-                self.dramatical_print(action['narration'])
+                self.dramatic_print(action['narration'])
                 self.hero_fight_monster(mission_monster)
                 self.monster_fight_hero(mission_monster)
 
@@ -134,17 +133,17 @@ class Game:
             if not is_monster_alive:
                 mission['completed'] = True
                 result = [acts for acts in action['actions'] if acts['result'] == 'victory'].pop()
-                self.dramatical_print(result['narration'])
+                self.dramatic_print(result['narration'])
 
             if not is_hero_alive:
                 result = [acts for acts in action['actions'] if acts['result'] == 'defeat'].pop()
-                self.dramatical_print(result['narration'])
-                self.dramatical_print('Better luck next time !!')
+                self.dramatic_print(result['narration'])
+                self.dramatic_print('Better luck next time !!')
 
-        self.dramatical_print('All missions are completed')
-        return 0;
+        self.dramatic_print('All missions are completed')
+        return 0
 
-    def dramatical_print(self, txt):
+    def dramatic_print(self, txt):
         for letter in txt:
             sys.stdout.write(letter)
             sys.stdout.flush()
@@ -154,23 +153,23 @@ class Game:
     def are_characters_alive(self, current_monster: Monster):
         hero_life = self.get_hero().get_life()
         monster_life = current_monster.get_life()
-        return (hero_life > 0, monster_life > 0)
+        return hero_life > 0, monster_life > 0
 
     def hero_fight_monster(self, monster_to_fight: Monster):
         hero = self.get_hero()
-        self.dramatical_print(
+        self.dramatic_print(
             f'{hero.get_name()} will strike {monster_to_fight.get_name()} with your mighty weapon {hero.get_weapon().get_name()}')
 
         (damage, material) = hero.attack()
-        monster_to_fight.recieve_attack(damage, material)
-        self.dramatical_print(
+        monster_to_fight.receive_attack(damage, material)
+        self.dramatic_print(
             f'You manage to dealt {damage} points to {monster_to_fight.get_name()} now its life drops to: {monster_to_fight.get_life()} ')
 
     def monster_fight_hero(self, monster: Monster):
         hero = self.get_hero()
-        self.dramatical_print(f'{monster.get_name()} is attacking {hero.get_name()}')
+        self.dramatic_print(f'{monster.get_name()} is attacking {hero.get_name()}')
 
         (damage,) = monster.attack()
-        hero.recieve_attack(damage)
-        self.dramatical_print(
+        hero.receive_attack(damage)
+        self.dramatic_print(
             f'{monster.get_name()} has strike you down with {damage} points now your life drops to: {hero.get_life()} ')

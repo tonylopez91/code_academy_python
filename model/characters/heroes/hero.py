@@ -20,7 +20,7 @@ class Hero(Character):
     def get_outfit_defense(self):
         return self.__outfit_defense
 
-    def recieve_attack(self, damage_to_recieve):
+    def receive_attack(self, damage_to_recieve):
         resting_life = self.get_life() + self.get_outfit_defense() - damage_to_recieve
 
         self.life = 0 if resting_life <= 0 else resting_life
@@ -32,4 +32,4 @@ class Hero(Character):
         print(f'{self.get_name()} is {action} the {weapon.get_type()} {weapon.get_name()} \n')
         (damage, material) = weapon.action()
 
-        return (damage + self.get_attack(), material)
+        return damage + self.get_attack(), material

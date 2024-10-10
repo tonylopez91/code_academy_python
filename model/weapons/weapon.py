@@ -15,11 +15,11 @@ class Weapon:
         'damage': 0
     }
 
-    def __init__(self, type) -> None:
-        (min, max) = configs.weapons_damage_range
-        self.__type = type
+    def __init__(self, weapon_type) -> None:
+        (minimal, maximum) = configs.weapons_damage_range
+        self.__type = weapon_type
         self.__name = generate_name(style='orc', library=True)
-        self.__damage = randint(min, max)
+        self.__damage = randint(minimal, maximum)
         self.set_special_effect()
 
     def action(self) -> tuple:  # -> Any:
@@ -39,8 +39,8 @@ class Weapon:
 
     def set_special_effect(self):
         if choice([True, False]):
-            (min, max) = configs.special_effect_damage_range
+            (minimal, maximum) = configs.special_effect_damage_range
 
             self.__is_special = True
             self.__special_effect['name'] = generate_name(style='aztec')
-            self.__special_effect['damage'] = randint(min, max)
+            self.__special_effect['damage'] = randint(minimal, maximum)

@@ -27,7 +27,7 @@ class Monster(Character):
     def get_weakness_damage(self):
         return self.__weakness_damage
 
-    def recieve_attack(self, damage_to_recieve, weapon):
+    def receive_attack(self, damage_to_recieve, weapon):
         weakness_value = 0 if self.get_weakness() != weapon else (self.get_weakness_damage() / 100) * (
                 self.get_resistance() + self.get_life())
 

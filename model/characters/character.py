@@ -23,5 +23,5 @@ class Character:
     def attack(self) -> tuple:
         raise NotImplementedError
 
-    def recieve_attack(self, damage_to_recieve):
+    def receive_attack(self, damage_to_recieve):
         raise NotImplementedError
