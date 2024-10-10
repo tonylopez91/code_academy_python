@@ -3,7 +3,7 @@ import sys, time
 from random import choice, randint
 from fictional_names.name_generator import generate_name, styles
 from configs import configs
-from model.weapons import Physical, Magical 
+from model.weapons import Physical, Magical 3
 from model.characters import Warrior, Mage, Dragon, Ogre, Hero, Monster
 
 
